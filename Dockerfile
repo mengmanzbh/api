@@ -10,7 +10,7 @@ WORKDIR /go/src/
 
 COPY . /go/src/
 
-RUN go build trainTickets/main.go
+RUN /go/src/trainTickets/go build -o main trainTickets/main.go
 
 CMD ["./main"]
 # Application image.
