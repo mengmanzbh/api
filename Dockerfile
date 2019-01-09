@@ -3,10 +3,10 @@ FROM golang:1.8 as builder
 RUN go get -u github.com/gin-gonic/gin
 RUN go get github.com/streadway/amqp
 
-WORKDIR /go/src/app/
+WORKDIR /go/src/
 
 
-COPY . /go/src/app/
+COPY . /go/src/
 # ADD ./trainTickets/. .
 # # COPY trainTickets/main.go .
 # RUN /usr/local/go/bin/go build -o app trainTickets/main.go
