@@ -5,6 +5,8 @@ import (
 
 	_ "trainTickets/docs"
 	"github.com/gin-gonic/gin"
+	"github.com/swaggo/gin-swagger/swaggerFiles"
+	"github.com/swaggo/gin-swagger"
 )
 
 func main() {
@@ -22,5 +24,6 @@ func main() {
 	r.POST("/trainTickets/pay_callback", api.Pay_callback)
 	r.POST("/trainTickets/refund_callback", api.Refund_callback)
 
+    r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	r.Run()
 }

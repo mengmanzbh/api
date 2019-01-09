@@ -4,6 +4,9 @@ RUN go get -u github.com/gin-gonic/gin
 RUN go get github.com/streadway/amqp
 RUN go get github.com/alecthomas/template
 RUN go get github.com/swaggo/swag
+RUN go get -u -v github.com/swaggo/gin-swagger
+RUN go get -u -v github.com/swaggo/gin-swagger/swaggerFiles
+RUN go get -u -v github.com/satori/go.uuid
 
 COPY . /go/src/
 
