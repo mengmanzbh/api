@@ -1,131 +1,28 @@
-basePath: /v2
-definitions:
-  web.APIError:
-    properties:
-      createAt:
-        type: string
-      errorCode:
-        type: integer
-      errorMessage:
-        type: string
-    type: object
-  web.RevValue:
-    properties:
-      data:
-        type: integer
-      err:
-        type: integer
-      status:
-        type: boolean
-    type: object
-host: petstore.swagger.io
+basePath: '{{.BasePath}}'
+host: '{{.Host}}'
 info:
-  contact:
-    email: support@swagger.io
-    name: API Support
-    url: http://www.swagger.io/support
-  description: This is a sample server Petstore server.
-  license:
-    name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
-  termsOfService: http://swagger.io/terms/
-  title: Swagger Example API
-  version: "1.0"
+  contact: {}
+  description: '{{.Description}}'
+  license: {}
+  title: '{{.Title}}'
+  version: '{{.Version}}'
 paths:
-  /file/upload:
-    post:
-      consumes:
-      - multipart/form-data
-      description: Upload file
-      operationId: file.upload
-      parameters:
-      - description: this is a test file
-        in: formData
-        name: file
-        required: true
-        type: file
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: ok
-          schema:
-            type: string
-        "400":
-          description: We need ID!
-          schema:
-            $ref: '#/definitions/web.APIError'
-            type: object
-        "404":
-          description: Can not find ID
-          schema:
-            $ref: '#/definitions/web.APIError'
-            type: object
-      summary: Upload file
-  /phoneapi/Telcheck:
+  /trainTickets/cityCode:
     post:
       consumes:
       - application/json
-      description: 检查手机号码是否能充值
+      description: 站点简码查询
       parameters:
-      - description: phoneno
+      - description: 站点名，如苏州、苏州北，不需要加“站”字
         in: path
-        name: phoneno
+        name: stationName
         required: true
         type: string
-      - description: phoneno
+      - description: 如果需要全部站点简码，请将此参数设为1
         in: path
-        name: phoneno
-        required: true
+        name: all
         type: string
       produces:
       - application/json
-      responses:
-        "200":
-          description: 手机可以充值
-          schema:
-            type: string
-        "400":
-          description: 手机号码必须输入
-          schema:
-            type: string
-  /testapi/get-struct-array-by-string/{some_id}:
-    get:
-      consumes:
-      - application/json
-      description: get struct array by ID
-      operationId: get-struct-array-by-string
-      parameters:
-      - description: Some ID
-        in: path
-        name: some_id
-        required: true
-        type: string
-      - description: Offset
-        in: query
-        name: offset
-        required: true
-        type: integer
-      - description: Offset
-        in: query
-        name: limit
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: ok
-          schema:
-            type: string
-        "400":
-          description: We need ID!
-          schema:
-            $ref: '#/definitions/web.APIError'
-            type: object
-        "404":
-          description: Can not find ID
-          schema:
-            $ref: '#/definitions/web.APIError'
-            type: object
+      summary: 站点简码查询
 swagger: "2.0"
