@@ -2,6 +2,8 @@ FROM golang:1.8 as builder
 
 RUN go get -u github.com/gin-gonic/gin
 RUN go get github.com/streadway/amqp
+RUN go get github.com/alecthomas/template
+RUN go get github.com/swaggo/swag
 
 WORKDIR /go/src/
 
