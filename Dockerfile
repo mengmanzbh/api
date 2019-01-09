@@ -7,6 +7,7 @@ RUN go get github.com/swaggo/swag
 RUN go get github.com/swaggo/gin-swagger
 RUN go get github.com/swaggo/gin-swagger/swaggerFiles
 RUN go get github.com/satori/go.uuid
+RUN go get -u github.com/swaggo/swag/cmd/swag
 
 COPY . /go/src/
 
