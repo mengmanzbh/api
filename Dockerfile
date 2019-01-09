@@ -5,12 +5,12 @@ RUN go get github.com/streadway/amqp
 RUN go get github.com/alecthomas/template
 RUN go get github.com/swaggo/swag
 
-WORKDIR /go/src/
+WORKDIR /go/src/trainTickets
 
 
 COPY . /go/src/
-
-RUN /go/src/trainTickets/go build -o main trainTickets/main.go
+RUN 
+RUN go build -o main trainTickets/main.go
 
 CMD ["./main"]
 # Application image.
