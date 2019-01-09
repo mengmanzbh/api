@@ -12,9 +12,9 @@ COPY . /go/src/
 
 RUN go build -o app trainTickets/main.go
 
-# # Application image.
-# FROM golang:1.8
+# Application image.
+FROM golang:1.8
 
-# COPY --from=builder /go/src/app/app /usr/local/bin/app
+COPY --from=builder /go/src/trainTickets/app /usr/local/bin/app
 
-# CMD ["/usr/local/bin/app"]
+CMD ["/usr/local/bin/app"]
