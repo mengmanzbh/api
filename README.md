@@ -1,16 +1,8 @@
-#### Celler 示例
----
-
-##### 自动生成swagger文档
-```bash
-$ go get -u github.com/swaggo/swag/cmd/swag
-$ swag init
-```
-#### 运行示例main
-```bash
-go run main.go
-```
-#### 打开浏览器
-```bash
-http://localhost:8080/swagger/index.html
+```sh
+$ docker-compose build
+$ docker-compose up -d
+$ docker-compose up --build -d
+该步骤需要多个spider才运行
+$ docker-compose scale consumer=4
+$ docker-compose down
 ```
