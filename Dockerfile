@@ -5,13 +5,11 @@ RUN go get github.com/streadway/amqp
 RUN go get github.com/alecthomas/template
 RUN go get github.com/swaggo/swag
 
-WORKDIR /go/src/trainTickets
-
-
 COPY . /go/src/
-RUN 
-RUN go build -o main main.go
 
+
+WORKDIR /go/src/trainTickets
+RUN go build -o main main.go
 CMD ["./main"]
 # Application image.
 # FROM golang:1.8
