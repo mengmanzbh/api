@@ -12,12 +12,11 @@ const APPKEY = "5b433b1f92d41bba340a5bb47464ce32" //您申请的APPKEY
 
 
 // @Summary 站点简码查询
-// @Description 站点简码查询,查询站点的简码，一般不会变，请做好缓存
+// @Description 站点简码查询
 // @Accept json
 // @Produce json
 // @Param stationName path string true "站点名，如苏州、苏州北，不需要加“站”字"
 // @Param all path string false "如果需要全部站点简码，请将此参数设为1"
-// @Success 200 {string} string "ok"
 // @Router /trainTickets/cityCode [post]
 func CityCode(ctx *gin.Context) {
 	stationName := ctx.PostForm("stationName")
