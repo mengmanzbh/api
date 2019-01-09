@@ -2,3 +2,5 @@ version: '3'
 services:
   apiservice:
     build: .
+    ports:
+    - "9000:8080"     # 绑定容器的8080端口到主机的9000端口
