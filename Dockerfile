@@ -9,9 +9,8 @@ WORKDIR /go/src/
 
 
 COPY . /go/src/
-# ADD ./trainTickets/. .
-# # COPY trainTickets/main.go .
-# RUN /usr/local/go/bin/go build -o app trainTickets/main.go
+
+RUN /go/src//go build -o app trainTickets/main.go
 
 # # Application image.
 # FROM golang:1.8
