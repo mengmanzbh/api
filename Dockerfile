@@ -6,7 +6,7 @@ RUN go get github.com/streadway/amqp
 WORKDIR /go/src/app/
 
 
-COPY . .
+COPY . /go/src/app/
 # ADD ./trainTickets/. .
 # # COPY trainTickets/main.go .
 # RUN /usr/local/go/bin/go build -o app trainTickets/main.go
