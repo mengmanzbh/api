@@ -20,9 +20,14 @@ func main() {
 	r.POST("/trainTickets/refund", api.Refund)
 	r.POST("/trainTickets/orders", api.Orders)
 	r.POST("/trainTickets/cancel", api.Cancel)
+	r.POST("/trainTickets/insertPassenger", api.InsertPassengerToDB)
+	r.POST("/trainTickets/queryPassenger", api.QueryPassengerFromDB)
+	r.POST("/trainTickets/updatePassenger", api.UpdatePassengerToDB)
+	r.POST("/trainTickets/deletePassenger", api.DeletePassengerFromDB)
 	r.POST("/trainTickets/submit_callback", api.Submit_callback)
 	r.POST("/trainTickets/pay_callback", api.Pay_callback)
 	r.POST("/trainTickets/refund_callback", api.Refund_callback)
+
 
     r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	r.Run()
