@@ -71,13 +71,13 @@ func Pay(ctx *gin.Context) {
 
     if err!=nil{
         ctx.JSON(404, gin.H{
-            "error_code": "0",
+            "error_code": "1",
             "message": "数据提交失败",
         })
 
     }else{
         ctx.JSON(200, gin.H{
-            "error_code": "1",
+            "error_code": "0",
             "message": "数据提交成功",
         })
     }
