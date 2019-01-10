@@ -6,9 +6,12 @@ import (
     // "trainTickets/utils"
     // "net/url"
     "database/sql"
-    "encoding/json"
+    // _ "github.com/go-sql-driver/mysql"
+    // "encoding/json"
     "time"
     "crypto/md5"
+    "encoding/hex"
+    "strconv"
 )
 const (
     DB_Driver = "root:my-secret-pw@tcp(3.81.214.206:3306)/data?charset=utf8"
