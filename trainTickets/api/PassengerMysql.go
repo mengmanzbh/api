@@ -88,18 +88,18 @@ func GetNowtimeMD5() string {
     return GetMD5Hash(timestamp)
 }
 func OpenAndInsertToDB() {
-    opend, db := OpenDB()
-    if opend {
-        fmt.Println("open success")
-        // DeleteFromDB(db, 10)
-        //QueryFromDB(db)
-        //DeleteFromDB(db, 1)
-        //UpdateDB(db, 5)
-        //UpdateUID(db, 5)
-        //UpdateTime(db, 4)
-        // insertToDB(db)
-    } else {
-        fmt.Println("open faile:")
-    }
+    // opend, db := OpenDB()
+    // if opend {
+    //     fmt.Println("open success")
+    //     // DeleteFromDB(db, 10)
+    //     //QueryFromDB(db)
+    //     //DeleteFromDB(db, 1)
+    //     //UpdateDB(db, 5)
+    //     //UpdateUID(db, 5)
+    //     //UpdateTime(db, 4)
+    //     insertToDB(db)
+    // } else {
+    //     fmt.Println("open faile:")
+    // }
 
 }
