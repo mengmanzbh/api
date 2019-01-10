@@ -3,9 +3,12 @@ package api
 import (
 	"github.com/gin-gonic/gin" 
     "fmt"
-    "trainTickets/utils"
-    "net/url"
+    // "trainTickets/utils"
+    // "net/url"
+    "database/sql"
     "encoding/json"
+    "time"
+    "crypto/md5"
 )
 const (
     DB_Driver = "root:my-secret-pw@tcp(3.81.214.206:3306)/data?charset=utf8"
@@ -61,14 +64,14 @@ func CheckErr(err error) {
     }
 }
 
-func GetTime() string {
-    const shortForm = "2006-01-02 15:04:05"
-    t := time.Now()
-    temp := time.Date(t.Year(), t.Month(), t.Day(), t.Hour(), t.Minute(), t.Second(), t.Nanosecond(), time.Local)
-    str := temp.Format(shortForm)
-    fmt.Println(t)
-    return str
-}
+// func GetTime() string {
+//     const shortForm = "2006-01-02 15:04:05"
+//     t := time.Now()
+//     temp := time.Date(t.Year(), t.Month(), t.Day(), t.Hour(), t.Minute(), t.Second(), t.Nanosecond(), time.Local)
+//     str := temp.Format(shortForm)
+//     fmt.Println(t)
+//     return str
+// }
 
 func GetMD5Hash(text string) string {
     haser := md5.New()
