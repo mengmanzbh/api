@@ -30,41 +30,45 @@ func OpenDB() (success bool, db *sql.DB) {
 }
 //插入数据
 func InsertPassengerToDB(ctx *gin.Context) {
-        customer_id := "334534"
+        passportse_no := "420205199207231234"
+        customer_id := "32333"
+        uid := GetMD5Hash(passportse_no+customer_id)
          //打开数据库
          opend, db := OpenDB()
         if opend {
             fmt.Println("open success")
-            datain := Dataisexist(ctx,customer_id)
+            datain := Dataisexist(ctx,uid)
             if datain {
                 fmt.Println("存在")
+                 ctx.JSON(200, gin.H{
+                   "error_code": "1",
+                   "message": "该乘客已经添加过了",
+                })
             }else{
                 fmt.Println("不存在")
-            }
+                 /**************不存在数据插入*******************/
+                    nowTimeStr := GetTime()
+                    stmt, err := db.Prepare("insert passengers set passengerse_name=?,piao_type=?,piaotype_name=?,passporttypese_id=?,passporttypeseid_name=?,passportse_no=?,create_time=?,customer_id=?,uid=?")
+                    CheckErr(err)
+                    res, err := stmt.Exec("张天爱", "1", "成人票", "1", "二代身份证","420205199207231234",nowTimeStr,"334534",uid)
 
-            passportse_no := "420205199207231234"
-            customer_id := "32333"
-            uid := GetMD5Hash(passportse_no+customer_id)
-            nowTimeStr := GetTime()
-            stmt, err := db.Prepare("insert passengers set passengerse_name=?,piao_type=?,piaotype_name=?,passporttypese_id=?,passporttypeseid_name=?,passportse_no=?,create_time=?,customer_id=?,uid=?")
-            CheckErr(err)
-            res, err := stmt.Exec("张天爱", "1", "成人票", "1", "二代身份证","420205199207231234",nowTimeStr,"334534",uid)
-
-            CheckErr(err)
-            id, err := res.LastInsertId()
-            CheckErr(err)
-            if err != nil {
-                fmt.Println("插入数据失败")
-                ctx.JSON(200, gin.H{
-                   "error_code": "1",
-                    "message": "添加乘客异常，请稍后重试",
-                })
-            } else {
-                fmt.Println("插入数据成功：", id)
-                ctx.JSON(200, gin.H{
-                   "error_code": "0",
-                   "message": "添加乘客成功",
-                })
+                    CheckErr(err)
+                    id, err := res.LastInsertId()
+                    CheckErr(err)
+                    if err != nil {
+                        fmt.Println("插入数据失败")
+                        ctx.JSON(200, gin.H{
+                           "error_code": "1",
+                            "message": "添加乘客异常，请稍后重试",
+                        })
+                    } else {
+                        fmt.Println("插入数据成功：", id)
+                        ctx.JSON(200, gin.H{
+                           "error_code": "0",
+                           "message": "添加乘客成功",
+                        })
+                    }
+                 /**************不存在数据插入*******************/
             }
         } else {
             fmt.Println("open faile:")
@@ -76,8 +80,8 @@ func InsertPassengerToDB(ctx *gin.Context) {
 
 }
 //先检查数据是否存在，在插入
-func Dataisexist(ctx *gin.Context,customerid string) (x bool){
-    customer_id := customerid
+func Dataisexist(ctx *gin.Context,uid string) (x bool){
+    customer_id := uid
     var isexist bool
     opend, db := OpenDB()
     if opend {
@@ -108,8 +112,8 @@ func Dataisexist(ctx *gin.Context,customerid string) (x bool){
             }
             // fmt.Println(record)
             //过滤数据
-            if record["customer_id"] == customer_id{
-                fmt.Println(record["customer_id"])  
+            if record["uid"] == customer_id{
+                fmt.Println(record["uid"])  
                 isexist = true 
             }else{
                 isexist = false
