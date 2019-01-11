@@ -89,7 +89,7 @@ func QueryPassengerFromDB(ctx *gin.Context) {
             ctx.JSON(404, gin.H{
             "error_code": "1",
             "message": "查询异常",
-             }             
+             })             
             /**********查询异常***********/
         } else {
             /**********查询成功**********/
@@ -109,7 +109,7 @@ func QueryPassengerFromDB(ctx *gin.Context) {
             ctx.JSON(200, gin.H{
             "error_code": "0",
              "message": "查询乘客成功",
-             }
+             })
             /**********查询成功**********/
         }
 
