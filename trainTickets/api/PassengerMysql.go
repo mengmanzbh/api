@@ -80,37 +80,63 @@ func QueryPassengerFromDB(ctx *gin.Context) {
         fmt.Println("open success")
         /**********查询数据***********/
         customer_id := "334534"
-        rows, err := db.Query("SELECT * FROM passengers where customer_id=?",customer_id)
-        CheckErr(err)
-        if err != nil {
-            fmt.Println("error:",err)
-            /**********查询异常***********/
-            ctx.JSON(404, gin.H{
-            "error_code": "1",
-            "message": "查询异常",
-             })             
-            /**********查询异常***********/
-        } else {
-            /**********查询成功**********/
+        // rows, err := db.Query("SELECT * FROM passengers where customer_id=?",customer_id)
+        // CheckErr(err)
+        // if err != nil {
+        //     fmt.Println("error:",err)
+        //     /**********查询异常***********/
+        //     ctx.JSON(404, gin.H{
+        //     "error_code": "1",
+        //     "message": "查询异常",
+        //      })             
+        //     /**********查询异常***********/
+        // } else {
+        //     /**********查询成功**********/
 
-            for rows.Next() {
-            var passengerse_name string
-            var piao_type string
-            var piaotype_name string
-            var passporttypese_id string
-            var passporttypeseid_name string
-            var passportse_no string
-            CheckErr(err)
-            err = rows.Scan(&passengerse_name, &piao_type, &piaotype_name, &passporttypese_id, &passporttypeseid_name, &passportse_no)
-            fmt.Println(passengerse_name)
+        //     for rows.Next() {
+        //     var passengerse_name string
+        //     var piao_type string
+        //     var piaotype_name string
+        //     var passporttypese_id string
+        //     var passporttypeseid_name string
+        //     var passportse_no string
+        //     CheckErr(err)
+        //     err = rows.Scan(&passengerse_name, &piao_type, &piaotype_name, &passporttypese_id, &passporttypeseid_name, &passportse_no)
+        //     fmt.Println(passengerse_name)
+        //     }
+        //     //返回数据给前端
+        //     ctx.JSON(200, gin.H{
+        //     "error_code": "0",
+        //      "message": "查询乘客成功",
+        //      })
+        //     /**********查询成功**********/
+        // }
+
+        rows, err := db.Query("SELECT * FROM passengers")
+        check(err)
+
+        for rows.Next() {
+            columns, _ := rows.Columns()
+
+            scanArgs := make([]interface{}, len(columns))
+            values := make([]interface{}, len(columns))
+
+            for i := range values {
+                scanArgs[i] = &values[i]
             }
-            //返回数据给前端
-            ctx.JSON(200, gin.H{
-            "error_code": "0",
-             "message": "查询乘客成功",
-             })
-            /**********查询成功**********/
+
+            //将数据保存到 record 字典
+            err = rows.Scan(scanArgs...)
+            record := make(map[string]string)
+            for i, col := range values {
+                if col != nil {
+                    record[columns[i]] = string(col.([]byte))
+                }
+            }
+            fmt.Println(record)
         }
+        rows.Close()
+
 
         /**********查询数据***********/
 
