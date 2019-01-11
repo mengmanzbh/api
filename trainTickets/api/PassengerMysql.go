@@ -196,7 +196,7 @@ func UpdatePassengerToDB(ctx *gin.Context) {
     if opend {
         fmt.Println("open success")
 
-        stmt, err := db.Prepare("update passengers set passengerse_name=? piao_type=? piaotype_name? passporttypese_id=? passporttypeseid_name=? passportse_no=? where uid=?")
+        stmt, err := db.Prepare("update passengers set passengerse_name=?, piao_type=?, piaotype_name=?, passporttypese_id=?, passporttypeseid_name=?, passportse_no=? where uid=?")
         CheckErr(err)
         res, err := stmt.Exec("张雨绮","1","成人票","1","二代身份证","520205199207231234",uid)
         affect, err := res.RowsAffected()
