@@ -76,7 +76,7 @@ func InsertPassengerToDB(ctx *gin.Context) {
 
 }
 //先检查数据是否存在，在插入
-func Dataisexist(ctx *gin.Context,customerid string) (isexist bool){
+func Dataisexist(ctx *gin.Context,customerid string) (x bool){
     customer_id := customerid
     var isexist bool
     opend, db := OpenDB()
