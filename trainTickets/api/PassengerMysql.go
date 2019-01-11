@@ -35,8 +35,8 @@ func InsertPassengerToDB(ctx *gin.Context) {
          opend, db := OpenDB()
         if opend {
             fmt.Println("open success")
-            isexist := Dataisexist(ctx,customer_id)
-            if isexist {
+            datain := Dataisexist(ctx,customer_id)
+            if datain {
                 fmt.Println("存在")
             }else{
                 fmt.Println("不存在")
