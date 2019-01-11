@@ -75,13 +75,16 @@ func InsertPassengerToDB(ctx *gin.Context) {
 //查询数据
 func QueryPassengerFromDB(ctx *gin.Context) {
 
+    customer_id := "334534"
+
     opend, db := OpenDB()
     if opend {
         fmt.Println("open success")
         /**********查询数据***********/
         rows, err := db.Query("SELECT * FROM passengers")
         CheckErr(err)
-
+        defer rows.Close()
+        //循环结果集 
         for rows.Next() {
             columns, _ := rows.Columns()
 
@@ -101,13 +104,12 @@ func QueryPassengerFromDB(ctx *gin.Context) {
                 }
             }
             // fmt.Println(record)
-
-
-            fmt.Println(record["customer_id"])
-
+            if record["customer_id"] == customer_id{
+            fmt.Println(record["customer_id"])    
+            }
+            
+            
         }
-        rows.Close()
-
 
         /**********查询数据***********/
 
