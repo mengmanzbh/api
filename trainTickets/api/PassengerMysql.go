@@ -29,12 +29,14 @@ func OpenDB() (success bool, db *sql.DB) {
     return isOpen, db
 }
 func insertToDB(db *sql.DB, ctx *gin.Context)  { 
-    // uid := GetNowtimeMD5()
+    passportse_no := "420205199207231234"
+    customer_id := "32333"
+    uid := GetMD5Hash(passportse_no+customer_id)
     nowTimeStr := GetTime()
-    stmt, err := db.Prepare("insert passengers set passengerse_name=?,piao_type=?,piaotype_name=?,passporttypese_id=?,passporttypeseid_name=?,passportse_no=?,create_time=?,customer_id=?")
+    stmt, err := db.Prepare("insert passengers set passengerse_name=?,piao_type=?,piaotype_name=?,passporttypese_id=?,passporttypeseid_name=?,passportse_no=?,create_time=?,customer_id=?,uid=?")
     CheckErr(err)
-    res, err := stmt.Exec("张天爱", "1", "成人票", "1", "二代身份证","420205199207231234",nowTimeStr,"334534")
-    // res, err := stmt.Exec("zhangtianai", "1", "chengrenpiao", "1", "edsfz","420205199207231234",nowTimeStr,"334534")
+    res, err := stmt.Exec("张天爱", "1", "成人票", "1", "二代身份证","420205199207231234",nowTimeStr,"334534",uid)
+
     CheckErr(err)
     id, err := res.LastInsertId()
     CheckErr(err)
