@@ -34,6 +34,8 @@ func InsertPassengerToDB(ctx *gin.Context) {
          opend, db := OpenDB()
         if opend {
             fmt.Println("open success")
+
+
             passportse_no := "420205199207231234"
             customer_id := "32333"
             uid := GetMD5Hash(passportse_no+customer_id)
@@ -55,14 +57,14 @@ func InsertPassengerToDB(ctx *gin.Context) {
                 fmt.Println("插入数据成功：", id)
                 ctx.JSON(200, gin.H{
                    "error_code": "0",
-                    "message": "添加乘客成功",
+                   "message": "添加乘客成功",
                 })
             }
         } else {
             fmt.Println("open faile:")
             ctx.JSON(200, gin.H{
              "error_code": "1",
-            "message": "添加乘客异常，请稍后重试",
+             "message": "添加乘客异常，请稍后重试",
             })
         }
 
@@ -72,10 +74,56 @@ func InsertPassengerToDB(ctx *gin.Context) {
 }
 //查询数据
 func QueryPassengerFromDB(ctx *gin.Context) {
-	        ctx.JSON(200, gin.H{
+
+    opend, db := OpenDB()
+    if opend {
+        fmt.Println("open success")
+        /**********查询数据***********/
+        customer_id := "334534"
+        stmt, _ := db.Prepare("SELECT * FROM passengers where customer_id=?")
+        rows, err := stmt.Query(customer_id)
+        CheckErr(err)
+        if err != nil {
+            fmt.Println("error:", err)
+            /-------查询异常--------/
+            ctx.JSON(404, gin.H{
+            "error_code": "1",
+            "message": "查询异常",
+             })              
+            /--------查询异常-------/
+        } else {
+            /-------查询成功--------/
+
+            for rows.Next() {
+            var passengerse_name string
+            var piao_type string
+            var piaotype_name string
+            var passporttypese_id string
+            var passporttypeseid_name string
+            var passportse_no string
+            CheckErr(err)
+            err = rows.Scan(&passengerse_name, &piao_type, &piaotype_name, &passporttypese_id, &passporttypeseid_name, &passportse_no)
+            fmt.Println(passengerse_name)
+            }
+            //返回数据给前端
+            ctx.JSON(200, gin.H{
             "error_code": "0",
-            "message": "查询乘客成功",
-            })
+             "message": "查询乘客成功",
+             })
+            /-------查询成功--------/
+        }
+
+        /**********查询数据***********/
+
+    } else {
+        fmt.Println("open faile:")
+        ctx.JSON(404, gin.H{
+        "error_code": "1",
+        "message": "数据库连接失败,查询异常",
+         })        
+    }
+
+
 
 }
 //更新数据
