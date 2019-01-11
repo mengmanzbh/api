@@ -62,7 +62,7 @@ func InsertPassengerToDB(ctx *gin.Context) {
                 //UpdateDB(db, 5)
                 //UpdateUID(db, 5)
                 //UpdateTime(db, 4)
-                insertToDB(db,ctx *gin.Context)
+                insertToDB(db,ctx)
             } else {
                 fmt.Println("open faile:")
                 ctx.JSON(200, gin.H{
