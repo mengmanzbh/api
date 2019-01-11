@@ -80,8 +80,7 @@ func QueryPassengerFromDB(ctx *gin.Context) {
         fmt.Println("open success")
         /**********查询数据***********/
         customer_id := "334534"
-        stmt, _ := db.Prepare("SELECT * FROM passengers where customer_id=?")
-        rows, err := stmt.Query(customer_id)
+        rows, _ := db.Query("SELECT * FROM passengers where customer_id=?",customer_id)
         CheckErr(err)
         if err != nil {
             fmt.Println("error:",err)
