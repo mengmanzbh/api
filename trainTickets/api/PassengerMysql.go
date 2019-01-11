@@ -84,7 +84,7 @@ func QueryPassengerFromDB(ctx *gin.Context) {
         rows, err := db.Query("SELECT * FROM passengers")
         CheckErr(err)
         defer rows.Close()
-        var dataArray []int
+        var dataArray []map[string]string
         //循环结果集 
         for rows.Next() {
             columns, _ := rows.Columns()
