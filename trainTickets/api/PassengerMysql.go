@@ -6,7 +6,7 @@ import (
     // "trainTickets/utils"
     // "net/url"
     "database/sql"
-    // _ "github.com/go-sql-driver/mysql"
+    _ "github.com/go-sql-driver/mysql"
     // "encoding/json"
     "time"
     "crypto/md5"
@@ -27,7 +27,7 @@ func OpenDB() (success bool, db *sql.DB) {
     CheckErr(err)
     return isOpen, db
 }
-func insertToDB(db *sql.DB,ctx *gin.Context) {
+func insertToDB(db *sql.DB, ctx *gin.Context)  { 
     uid := GetNowtimeMD5()
     nowTimeStr := GetTime()
     stmt, err := db.Prepare("insert userinfo set username=?,departname=?,created=?,password=?,uid=?")
@@ -54,22 +54,22 @@ func insertToDB(db *sql.DB,ctx *gin.Context) {
 func InsertPassengerToDB(ctx *gin.Context) {
          //打开数据库
          opend, db := OpenDB()
-            if opend {
-                fmt.Println("open success")
-                // DeleteFromDB(db, 10)
-                //QueryFromDB(db)
-                //DeleteFromDB(db, 1)
-                //UpdateDB(db, 5)
-                //UpdateUID(db, 5)
-                //UpdateTime(db, 4)
-                insertToDB(db,ctx)
-            } else {
-                fmt.Println("open faile:")
-                ctx.JSON(200, gin.H{
-                 "error_code": "1",
-                "message": "添加乘客异常，请稍后重试",
-                })
-            }
+        if opend {
+            fmt.Println("open success")
+            // DeleteFromDB(db, 10)
+            //QueryFromDB(db)
+            //DeleteFromDB(db, 1)
+            //UpdateDB(db, 5)
+            //UpdateUID(db, 5)
+            //UpdateTime(db, 4)
+            insertToDB(db,ctx)
+        } else {
+            fmt.Println("open faile:")
+            ctx.JSON(200, gin.H{
+             "error_code": "1",
+            "message": "添加乘客异常，请稍后重试",
+            })
+        }
 
 
 
