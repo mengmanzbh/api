@@ -104,8 +104,14 @@ func QueryPassengerFromDB(ctx *gin.Context) {
                 }
             }
             // fmt.Println(record)
+            //过滤数据
             if record["customer_id"] == customer_id{
             fmt.Println(record["customer_id"])    
+                 ctx.JSON(200, gin.H{
+                   "error_code": "0",
+                   "message": "查询乘客成功",
+                   "result": record,
+                  })
             }
             
             
