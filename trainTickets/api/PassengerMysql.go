@@ -27,12 +27,52 @@ func OpenDB() (success bool, db *sql.DB) {
     CheckErr(err)
     return isOpen, db
 }
+func insertToDB(db *sql.DB) {
+    uid := GetNowtimeMD5()
+    nowTimeStr := GetTime()
+    stmt, err := db.Prepare("insert userinfo set username=?,departname=?,created=?,password=?,uid=?")
+    CheckErr(err)
+    res, err := stmt.Exec("wangbiao", "zhangqi", nowTimeStr, "123456", uid)
+    CheckErr(err)
+    id, err := res.LastInsertId()
+    CheckErr(err)
+    if err != nil {
+        fmt.Println("插入数据失败")
+        ctx.JSON(200, gin.H{
+           "error_code": "1",
+            "message": "添加乘客异常，请稍后重试",
+        })
+    } else {
+        fmt.Println("插入数据成功：", id)
+        ctx.JSON(200, gin.H{
+           "error_code": "0",
+            "message": "添加乘客成功",
+        })
+    }
+}
 //插入数据
 func InsertPassengerToDB(ctx *gin.Context) {
-	        ctx.JSON(200, gin.H{
-            "error_code": "0",
-            "message": "添加乘客成功",
-            })
+         //打开数据库
+         opend, db := OpenDB()
+            if opend {
+                fmt.Println("open success")
+                // DeleteFromDB(db, 10)
+                //QueryFromDB(db)
+                //DeleteFromDB(db, 1)
+                //UpdateDB(db, 5)
+                //UpdateUID(db, 5)
+                //UpdateTime(db, 4)
+                insertToDB(db)
+            } else {
+                fmt.Println("open faile:")
+                ctx.JSON(200, gin.H{
+                 "error_code": "1",
+                "message": "添加乘客异常，请稍后重试",
+                })
+            }
+
+
+
 
 }
 //查询数据
