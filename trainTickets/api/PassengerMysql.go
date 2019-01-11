@@ -29,7 +29,7 @@ func OpenDB() (success bool, db *sql.DB) {
     return isOpen, db
 }
 func insertToDB(db *sql.DB, ctx *gin.Context)  { 
-    uid := GetNowtimeMD5()
+    // uid := GetNowtimeMD5()
     nowTimeStr := GetTime()
     stmt, err := db.Prepare("insert passengers set passengerse_name=?,piao_type=?,piaotype_name=?,passporttypese_id=?,passporttypeseid_name=?,passportse_no=?,create_time=?,customer_id=?")
     CheckErr(err)
