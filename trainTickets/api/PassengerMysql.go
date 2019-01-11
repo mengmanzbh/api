@@ -27,7 +27,7 @@ func OpenDB() (success bool, db *sql.DB) {
     CheckErr(err)
     return isOpen, db
 }
-func insertToDB(db *sql.DB) {
+func insertToDB(db *sql.DB,ctx *gin.Context) {
     uid := GetNowtimeMD5()
     nowTimeStr := GetTime()
     stmt, err := db.Prepare("insert userinfo set username=?,departname=?,created=?,password=?,uid=?")
@@ -62,7 +62,7 @@ func InsertPassengerToDB(ctx *gin.Context) {
                 //UpdateDB(db, 5)
                 //UpdateUID(db, 5)
                 //UpdateTime(db, 4)
-                insertToDB(db)
+                insertToDB(db,ctx *gin.Context)
             } else {
                 fmt.Println("open faile:")
                 ctx.JSON(200, gin.H{
