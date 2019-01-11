@@ -84,6 +84,7 @@ func QueryPassengerFromDB(ctx *gin.Context) {
         rows, err := db.Query("SELECT * FROM passengers")
         CheckErr(err)
         defer rows.Close()
+        dataArray := make([]map, 0)
         //循环结果集 
         for rows.Next() {
             columns, _ := rows.Columns()
@@ -107,15 +108,15 @@ func QueryPassengerFromDB(ctx *gin.Context) {
             //过滤数据
             if record["customer_id"] == customer_id{
             fmt.Println(record["customer_id"])    
-                 ctx.JSON(200, gin.H{
-                   "error_code": "0",
-                   "message": "查询乘客成功",
-                   "result": record,
-                  })
+            dataArray = append(dataArray, record)
             }
-            
-            
         }
+
+        ctx.JSON(200, gin.H{
+             "error_code": "0",
+             "message": "查询乘客成功",
+             "result": dataArray,
+        })
 
         /**********查询数据***********/
 
