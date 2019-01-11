@@ -191,8 +191,7 @@ func QueryPassengerFromDB(ctx *gin.Context) {
 func UpdatePassengerToDB(ctx *gin.Context) {
     passportse_no := "420205199207231234"
     customer_id := "32333"
-    var uuid string
-    uuid = GetMD5Hash(passportse_no+customer_id)
+    uuid := GetMD5Hash(passportse_no+customer_id)
 
     opend, db := OpenDB()
     if opend {
@@ -208,7 +207,7 @@ func UpdatePassengerToDB(ctx *gin.Context) {
 
         ctx.JSON(200, gin.H{
         "error_code": "0",
-        "message": "更新乘客成功",
+        "message": "更新乘客信息成功",
         })
     } else {
         fmt.Println("open faile:")
