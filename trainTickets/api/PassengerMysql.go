@@ -14,6 +14,7 @@ import (
     "strconv"
 )
 const (
+
     DB_Driver = "root:my-secret-pw@tcp(3.81.214.206:3306)/data?charset=utf8"
 )
 func OpenDB() (success bool, db *sql.DB) {
@@ -30,9 +31,9 @@ func OpenDB() (success bool, db *sql.DB) {
 func insertToDB(db *sql.DB, ctx *gin.Context)  { 
     uid := GetNowtimeMD5()
     nowTimeStr := GetTime()
-    stmt, err := db.Prepare("insert userinfo set username=?,departname=?,created=?,password=?,uid=?")
+    stmt, err := db.Prepare("insert passengers set passengerse_name=?,piao_type=?,piaotype_name=?,passporttypese_id=?,passporttypeseid_name=?,passportse_no=?,create_time=?,customer_id=?")
     CheckErr(err)
-    res, err := stmt.Exec("wangbiao", "zhangqi", nowTimeStr, "123456", uid)
+    res, err := stmt.Exec("张天爱", "1", "成人票", "1", "二代身份证","420205199207231234",nowTimeStr,"334534")
     CheckErr(err)
     id, err := res.LastInsertId()
     CheckErr(err)
