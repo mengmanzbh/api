@@ -189,10 +189,35 @@ func QueryPassengerFromDB(ctx *gin.Context) {
 }
 //更新数据
 func UpdatePassengerToDB(ctx *gin.Context) {
-	        ctx.JSON(200, gin.H{
-            "error_code": "0",
-            "message": "更新乘客成功",
-            })
+    passportse_no := "420205199207231234"
+    customer_id := "32333"
+    uid := GetMD5Hash(passportse_no+customer_id)
+
+    opend, db := OpenDB()
+    if opend {
+        fmt.Println("open success")
+
+        stmt, err := db.Prepare("update passengers set passengerse_name=? piao_type=? piaotype_name? passporttypese_id=? passporttypeseid_name=? passportse_no=? where uid=?")
+        CheckErr(err)
+        res, err := stmt.Exec("张雨绮","1","成人票","1","二代身份证","520205199207231234" uid)
+        affect, err := res.RowsAffected()
+        fmt.Println("更新数据：", affect)
+        CheckErr(err)
+
+
+        ctx.JSON(200, gin.H{
+        "error_code": "0",
+        "message": "更新乘客成功",
+        })
+    } else {
+        fmt.Println("open faile:")
+        ctx.JSON(200, gin.H{
+        "error_code": "1",
+        "message": "更新乘客信息异常",
+        })
+    }
+
+
 
 }
 //删除数据
