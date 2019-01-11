@@ -141,7 +141,6 @@ func QueryPassengerFromDB(ctx *gin.Context) {
         CheckErr(err)
         defer rows.Close()
         var dataArray []map[string]string
-        var isexist bool
         //循环结果集 
         for rows.Next() {
             columns, _ := rows.Columns()
@@ -165,7 +164,6 @@ func QueryPassengerFromDB(ctx *gin.Context) {
             //过滤数据
             if record["customer_id"] == customer_id{
                 fmt.Println(record["customer_id"])  
-                isexist = true 
                 dataArray = append(dataArray, record)
             }
         }
