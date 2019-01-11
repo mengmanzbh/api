@@ -191,8 +191,8 @@ func QueryPassengerFromDB(ctx *gin.Context) {
 func UpdatePassengerToDB(ctx *gin.Context) {
     passportse_no := "420205199207231234"
     customer_id := "32333"
-    var uid string
-    uid = GetMD5Hash(passportse_no+customer_id)
+    var uuid string
+    uuid = GetMD5Hash(passportse_no+customer_id)
 
     opend, db := OpenDB()
     if opend {
@@ -200,7 +200,7 @@ func UpdatePassengerToDB(ctx *gin.Context) {
 
         stmt, err := db.Prepare("update passengers set passengerse_name=? piao_type=? piaotype_name? passporttypese_id=? passporttypeseid_name=? passportse_no=? where uid=?")
         CheckErr(err)
-        res, err := stmt.Exec("张雨绮","1","成人票","1","二代身份证","520205199207231234" uid)
+        res, err := stmt.Exec("张雨绮","1","成人票","1","二代身份证","520205199207231234" uuid)
         affect, err := res.RowsAffected()
         fmt.Println("更新数据：", affect)
         CheckErr(err)
