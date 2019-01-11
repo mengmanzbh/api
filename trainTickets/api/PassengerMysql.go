@@ -30,11 +30,17 @@ func OpenDB() (success bool, db *sql.DB) {
 }
 //插入数据
 func InsertPassengerToDB(ctx *gin.Context) {
+        customer_id := "334534"
          //打开数据库
          opend, db := OpenDB()
         if opend {
             fmt.Println("open success")
-
+            isexist := Dataisexist(ctx,customer_id)
+            if isexist {
+                fmt.Println("存在")
+            }else{
+                fmt.Println("不存在")
+            }
 
             passportse_no := "420205199207231234"
             customer_id := "32333"
@@ -68,15 +74,11 @@ func InsertPassengerToDB(ctx *gin.Context) {
             })
         }
 
-
-
-
 }
-//查询数据
-func QueryPassengerFromDB(ctx *gin.Context) {
-
-    customer_id := "334534"
-
+//先检查数据是否存在，在插入
+func Dataisexist(ctx *gin.Context,customerid string) (isexist bool){
+    customer_id := customerid
+    var isexist bool
     opend, db := OpenDB()
     if opend {
         fmt.Println("open success")
@@ -84,7 +86,7 @@ func QueryPassengerFromDB(ctx *gin.Context) {
         rows, err := db.Query("SELECT * FROM passengers")
         CheckErr(err)
         defer rows.Close()
-        var dataArray []map[string]string
+        
         //循环结果集 
         for rows.Next() {
             columns, _ := rows.Columns()
@@ -107,8 +109,64 @@ func QueryPassengerFromDB(ctx *gin.Context) {
             // fmt.Println(record)
             //过滤数据
             if record["customer_id"] == customer_id{
-            fmt.Println(record["customer_id"])    
-            dataArray = append(dataArray, record)
+                fmt.Println(record["customer_id"])  
+                isexist = true 
+            }else{
+                isexist = false
+            }
+        }
+        /**********查询数据***********/
+
+    } else {
+        fmt.Println("open faile:")
+        ctx.JSON(404, gin.H{
+        "error_code": "1",
+        "message": "数据库连接失败,查询异常",
+         })        
+    }
+    
+    return isexist
+}
+
+//查询数据
+func QueryPassengerFromDB(ctx *gin.Context) {
+
+    customer_id := "334534"
+
+    opend, db := OpenDB()
+    if opend {
+        fmt.Println("open success")
+        /**********查询数据***********/
+        rows, err := db.Query("SELECT * FROM passengers")
+        CheckErr(err)
+        defer rows.Close()
+        var dataArray []map[string]string
+        var isexist bool
+        //循环结果集 
+        for rows.Next() {
+            columns, _ := rows.Columns()
+
+            scanArgs := make([]interface{}, len(columns))
+            values := make([]interface{}, len(columns))
+
+            for i := range values {
+                scanArgs[i] = &values[i]
+            }
+
+            //将数据保存到 record 字典
+            err = rows.Scan(scanArgs...)
+            record := make(map[string]string)
+            for i, col := range values {
+                if col != nil {
+                    record[columns[i]] = string(col.([]byte))
+                }
+            }
+            // fmt.Println(record)
+            //过滤数据
+            if record["customer_id"] == customer_id{
+                fmt.Println(record["customer_id"])  
+                isexist = true 
+                dataArray = append(dataArray, record)
             }
         }
 
@@ -127,9 +185,6 @@ func QueryPassengerFromDB(ctx *gin.Context) {
         "message": "数据库连接失败,查询异常",
          })        
     }
-
-
-
 }
 //更新数据
 func UpdatePassengerToDB(ctx *gin.Context) {
