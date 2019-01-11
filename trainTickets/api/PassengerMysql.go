@@ -113,7 +113,7 @@ func QueryPassengerFromDB(ctx *gin.Context) {
         // }
 
         rows, err := db.Query("SELECT * FROM passengers")
-        check(err)
+        CheckErr(err)
 
         for rows.Next() {
             columns, _ := rows.Columns()
