@@ -191,7 +191,8 @@ func QueryPassengerFromDB(ctx *gin.Context) {
 func UpdatePassengerToDB(ctx *gin.Context) {
     passportse_no := "420205199207231234"
     customer_id := "32333"
-    uid := GetMD5Hash(passportse_no+customer_id)
+    var uid string
+    uid = GetMD5Hash(passportse_no+customer_id)
 
     opend, db := OpenDB()
     if opend {
