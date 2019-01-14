@@ -285,7 +285,7 @@ func QueryPassengerFromDB(ctx *gin.Context) {
         fmt.Println("token无效")
         return
     }
-    customerid = fmt.Sprintf("%s",customer_id)
+    customerid = fmt.Sprintf("%v",customer_id)
     fmt.Println(customerid)
     fmt.Println(realname)
     fmt.Println(nickname)
@@ -320,6 +320,7 @@ func QueryPassengerFromDB(ctx *gin.Context) {
             }
             // fmt.Println(record)
             //过滤数据
+            fmt.Println("record["customer_id"]:",record["customer_id"])
             if record["customer_id"] == customerid{
                 fmt.Println(record["customer_id"])  
                 dataArray = append(dataArray, record)
