@@ -34,6 +34,7 @@ func Submit(ctx *gin.Context) {
     randomstring := utils.GetRandomString(6)
 
 	user_orderid := fmt.Sprintf("%s,%s", randomstring, customer_id)
+	fmt.Println("用户订单号",user_orderid)
 	train_date := ctx.PostForm("train_date")
 	is_accept_standing := ctx.PostForm("is_accept_standing")
 	choose_seats := ctx.PostForm("choose_seats")
