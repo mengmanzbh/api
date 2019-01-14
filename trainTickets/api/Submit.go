@@ -18,7 +18,16 @@ func Submit(ctx *gin.Context) {
 	code := ctx.PostForm("code")
 	token := getAccess(code)//根据前端传来的code获取token
 
-	customer_id,realname,nickname,cellphone := GetUserByAccess(token,ctx)
+	customer_id,realname,nickname,cellphone,istoken := GetUserByAccess(token,ctx)
+
+	if istoken{
+		fmt.Println("token有效")
+		
+		}else{
+        fmt.Println("token无效")
+        return
+		}
+
 	var customerid string
 	customerid = strconv.FormatFloat(customer_id, 'E', -1, 64)
 	fmt.Println(customer_id)
@@ -76,7 +85,9 @@ func Submit(ctx *gin.Context) {
 
 
 // 根据授权码获取用户信息
-func GetUserByAccess(access string,ctx *gin.Context)(x float64,y string,z string,q string) {
+func GetUserByAccess(access string,ctx *gin.Context)(x float64,y string,z string,q string,istoken bool) {
+
+  var islogin bool
   data := make(map[string]interface{})
     data["access"] = access
     bytesData, err := json.Marshal(data)
@@ -113,6 +124,7 @@ func GetUserByAccess(access string,ctx *gin.Context)(x float64,y string,z string
     json.Unmarshal(respBytes,&netReturn)
     if netReturn["isSuccess"]==true{
         userdata := netReturn["data"]
+        islogin = true
         // fmt.Printf("获取用户信息:\r\n%v",userdata)
         customer_id = userdata.(map[string]interface{})["customer_id"].(float64)
         realname = userdata.(map[string]interface{})["realname"].(string)
@@ -121,11 +133,12 @@ func GetUserByAccess(access string,ctx *gin.Context)(x float64,y string,z string
         
     }else{
         fmt.Println("获取token失败")
+        islogin = false
         ctx.JSON(404, gin.H{
 			"error_code": "404",
 			"message": "token失效，请重新登录",
 		})
-		return
+		
     }
     return customer_id,realname,nickname,cellphone
 }
