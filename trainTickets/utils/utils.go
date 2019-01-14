@@ -65,7 +65,7 @@ func GetUserByAccess(access string,ctx *gin.Context)(x float64,y string,z string
         fmt.Println("获取token失败")
         islogin = false
         ctx.JSON(404, gin.H{
-            "error_code": "404",
+            "error_code": "1",
             "message": "token失效，请重新登录",
         })
         
