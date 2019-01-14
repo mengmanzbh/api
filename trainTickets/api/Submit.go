@@ -6,9 +6,9 @@ import (
     "trainTickets/utils"
     "net/url"
     "encoding/json"
-    "bytes"
-    "net/http"
-    "io/ioutil"
+    // "bytes"
+    // "net/http"
+    // "io/ioutil"
     // "strconv"
 )
 // const APPKEY = "5b433b1f92d41bba340a5bb47464ce32" //您申请的APPKEY
@@ -23,7 +23,7 @@ func Submit(ctx *gin.Context) {
 	    return
     }
 
-	fmt.Println(customerid)
+	fmt.Println(customer_id)
 	fmt.Println(realname)
 	fmt.Println(nickname)
 	fmt.Println(cellphone)
