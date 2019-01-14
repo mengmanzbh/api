@@ -17,7 +17,10 @@ func Submit(ctx *gin.Context) {
 	code := ctx.PostForm("code")
 	token := getAccess(code)//根据前端传来的code获取token
 
+   
 	customer_id,realname,nickname,cellphone := GetUserByAccess(token,ctx)
+	var customerid string
+	customerid = customer_id
 	fmt.Println(customer_id)
 	fmt.Println(realname)
 	fmt.Println(nickname)
@@ -25,7 +28,7 @@ func Submit(ctx *gin.Context) {
      
     randomstring := utils.GetRandomString(6)
 
-	user_orderid := randomstring+customer_id
+	user_orderid := randomstring+customerid
 	train_date := ctx.PostForm("train_date")
 	is_accept_standing := ctx.PostForm("is_accept_standing")
 	choose_seats := ctx.PostForm("choose_seats")
