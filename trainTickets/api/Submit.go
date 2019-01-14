@@ -22,7 +22,6 @@ func Submit(ctx *gin.Context) {
 		fmt.Println("token无效")
 	    return
     }
-
 	fmt.Println(customer_id)
 	fmt.Println(realname)
 	fmt.Println(nickname)
