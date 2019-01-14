@@ -286,7 +286,7 @@ func QueryPassengerFromDB(ctx *gin.Context) {
         return
     }
     customerid = fmt.Sprintf("%s",customer_id)
-    fmt.Println(customer_id)
+    fmt.Println(customerid)
     fmt.Println(realname)
     fmt.Println(nickname)
     fmt.Println(cellphone)
