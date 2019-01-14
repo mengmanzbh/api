@@ -15,6 +15,8 @@ func CityCode(ctx *gin.Context) {
 	stationName := ctx.PostForm("stationName")
     all := ctx.PostForm("all")
 	
+    code := ctx.PostForm("code")
+    token := getAccess(code)//根据前端传来的code获取token
     _,_,_,_,istoken := utils.GetUserByAccess(token,ctx)
     if !istoken{
         fmt.Println("token无效")
