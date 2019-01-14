@@ -11,7 +11,16 @@ import (
 //提交订单
 func Submit(ctx *gin.Context) {
 	
-	user_orderid := utils.GetRandomString(6)
+	code := ctx.PostForm("code")
+	token := getAccess(code)//根据前端传来的code获取token
+
+	customer_id,realname,nickname,cellphone := GetUserByAccess(token,ctx)
+	fmt.Println(customer_id)
+	fmt.Println(realname)
+	fmt.Println(nickname)
+	fmt.Println(cellphone)
+
+	user_orderid := utils.GetRandomString(6)+customer_id
 	train_date := ctx.PostForm("train_date")
 	is_accept_standing := ctx.PostForm("is_accept_standing")
 	choose_seats := ctx.PostForm("choose_seats")
@@ -55,4 +64,59 @@ func Submit(ctx *gin.Context) {
 			"result":netReturn["result"],
 		})
 	}
+}
+
+
+// 根据授权码获取用户信息
+func GetUserByAccess(access string,ctx *gin.Context)(x float64,y string,z string,q string) {
+  data := make(map[string]interface{})
+    data["access"] = access
+    bytesData, err := json.Marshal(data)
+    if err != nil {
+        fmt.Println(err.Error() )
+        return
+    }
+    reader := bytes.NewReader(bytesData)
+    url := "http://47.52.47.73:8112/auth/auth/GetUserByAccess"
+    request, err := http.NewRequest("POST", url, reader)
+    if err != nil {
+        fmt.Println(err.Error())
+        return
+    }
+    request.Header.Set("Content-Type", "application/json;charset=UTF-8")
+    client := http.Client{}
+    resp, err := client.Do(request)
+    if err != nil {
+        fmt.Println(err.Error())
+        return
+    }
+    respBytes, err := ioutil.ReadAll(resp.Body)
+    if err != nil {
+        fmt.Println(err.Error())
+        return
+    }
+    var customer_id float64
+    var realname string
+    var nickname string
+    var cellphone string
+
+    //返回结果
+    var netReturn map[string]interface{}
+    json.Unmarshal(respBytes,&netReturn)
+    if netReturn["isSuccess"]==true{
+        userdata := netReturn["data"]
+        // fmt.Printf("获取用户信息:\r\n%v",userdata)
+        customer_id = userdata.(map[string]interface{})["customer_id"].(float64)
+        realname = userdata.(map[string]interface{})["realname"].(string)
+        nickname = userdata.(map[string]interface{})["nickname"].(string)
+        cellphone = userdata.(map[string]interface{})["cellphone"].(string)
+        
+    }else{
+        fmt.Println("获取token失败")
+        ctx.JSON(404, gin.H{
+			"error_code": "404",
+			"message": "token失效，请重新登录",
+		})
+    }
+    return customer_id,realname,nickname,cellphone
 }
