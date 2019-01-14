@@ -140,5 +140,5 @@ func GetUserByAccess(access string,ctx *gin.Context)(x float64,y string,z string
 		})
 		
     }
-    return customer_id,realname,nickname,cellphone
+    return customer_id,realname,nickname,cellphone,islogin
 }
