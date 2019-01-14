@@ -47,13 +47,13 @@ func InsertSearchRecordToDB(ctx *gin.Context) {
             fmt.Println("插入数据失败")
             ctx.JSON(200, gin.H{
             "error_code": "1",
-            "message": "查询搜索记录失败",
+            "message": "插入搜索记录失败",
             })
         } else {
             fmt.Println("插入数据成功：", id)
             ctx.JSON(200, gin.H{
             "error_code": "0",
-            "message": "查询搜索记录成功",
+            "message": "插入搜索记录成功",
             })
         }
         /**********插入搜索记录*********/
@@ -61,6 +61,10 @@ func InsertSearchRecordToDB(ctx *gin.Context) {
 
     } else {
         fmt.Println("open faile:")
+            ctx.JSON(404, gin.H{
+            "error_code": "1",
+            "message": "数据库打开失败",
+            })
     }
 
 }
