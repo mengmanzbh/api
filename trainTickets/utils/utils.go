@@ -10,6 +10,7 @@ import (
     "fmt"
     "crypto/md5"
     "encoding/hex"
+    "github.com/gin-gonic/gin" 
 )
 
 // 根据授权码获取用户信息
