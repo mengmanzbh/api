@@ -36,19 +36,19 @@ func InsertSearchRecordToDB(ctx *gin.Context) {
         fmt.Println("open success")
         
         /**********插入搜索记录*********/
-        // uid := GetNowtimeMD5()
-        // nowTimeStr := GetTime()
-        // stmt, err := db.Prepare("insert passengers set username=?,departname=?,created=?,password=?,uid=?")
-        // CheckErr(err)
-        // res, err := stmt.Exec("wangbiao", "zhangqi", nowTimeStr, "123456", uid)
-        // CheckErr(err)
-        // id, err := res.LastInsertId()
-        // CheckErr(err)
-        // if err != nil {
-        //     fmt.Println("插入数据失败")
-        // } else {
-        //     fmt.Println("插入数据成功：", id)
-        // }
+        uid := GetNowtimeMD5()
+        nowTimeStr := GetTime()
+        stmt, err := db.Prepare("insert passengers set username=?,departname=?,created=?,password=?,uid=?")
+        CheckErr(err)
+        res, err := stmt.Exec("wangbiao", "zhangqi", nowTimeStr, "123456", uid)
+        CheckErr(err)
+        id, err := res.LastInsertId()
+        CheckErr(err)
+        if err != nil {
+            fmt.Println("插入数据失败")
+        } else {
+            fmt.Println("插入数据成功：", id)
+        }
         /**********插入搜索记录*********/
 
 
