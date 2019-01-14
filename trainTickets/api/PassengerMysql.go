@@ -90,6 +90,14 @@ func InsertSearchRecordToDB(ctx *gin.Context) {
         datain := CustomerDataisexist(ctx,customer_id)
         if datain {
              fmt.Println("该用户存在数据库")
+            //存在数据库直接更新记录
+            stmt, err := db.Prepare("update train_ticket_search_record set search_records=? customer_id=?")
+            CheckErr(err)
+            res, err := stmt.Exec("上海-杭州", customer_id)
+            affect, err := res.RowsAffected()
+            fmt.Println("更新数据：", affect)
+            CheckErr(err)
+
         }else{
              fmt.Println("该用户不存在数据库")
 
