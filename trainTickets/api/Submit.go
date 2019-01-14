@@ -62,14 +62,10 @@ func Submit(ctx *gin.Context) {
 	//发送请求
 	data,err:=utils.Post(juheURL,param)
 	if err!=nil{
-		fmt.Errorf("请求失败,错误信息:\r\n%v",err)
-
-	    juheorderid = netReturn["result"].(map[string]interface{})["orderid"].(string)
-	    error_code = netReturn["error_code"].(string)
-	    reason = netReturn["reason"].(string)
+		fmt.Errorf("请求失败,网络错误信息:\r\n%v",err)
 
 		ctx.JSON(404, gin.H{
-			"error_code": "404",
+			"error_code": "1",
 			"message": err,
 		})
 	}else{
@@ -79,7 +75,7 @@ func Submit(ctx *gin.Context) {
 	    juheorderid = netReturn["result"].(map[string]interface{})["orderid"].(string)
 	    error_code = netReturn["error_code"].(string)
 	    reason = netReturn["reason"].(string)
-	    
+
 		ctx.JSON(200, gin.H{
 			"error_code": netReturn["error_code"],
 			"message": netReturn["reason"],
