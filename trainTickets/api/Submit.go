@@ -6,6 +6,9 @@ import (
     "trainTickets/utils"
     "net/url"
     "encoding/json"
+    "bytes"
+    "net/http"
+    "io/ioutil"
 )
 // const APPKEY = "5b433b1f92d41bba340a5bb47464ce32" //您申请的APPKEY
 //提交订单
@@ -20,7 +23,7 @@ func Submit(ctx *gin.Context) {
 	fmt.Println(nickname)
 	fmt.Println(cellphone)
 
-	user_orderid := utils.GetRandomString(6)+customer_id
+	user_orderid := utils.GetRandomString(6).(string)+customer_id.(string)
 	train_date := ctx.PostForm("train_date")
 	is_accept_standing := ctx.PostForm("is_accept_standing")
 	choose_seats := ctx.PostForm("choose_seats")
