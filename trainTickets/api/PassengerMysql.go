@@ -28,7 +28,58 @@ func OpenDB() (success bool, db *sql.DB) {
     CheckErr(err)
     return isOpen, db
 }
+//先检查数据是否存在，在插入
+func CustomerDataisexist(ctx *gin.Context,uid string) (x bool){
+    customer_id := uid
+    var isexist bool
+    opend, db := OpenDB()
+    if opend {
+        fmt.Println("open success")
+        /**********查询数据***********/
+        rows, err := db.Query("SELECT * FROM train_ticket_search_record")
+        CheckErr(err)
+        defer rows.Close()
+        
+        //循环结果集 
+        for rows.Next() {
+            columns, _ := rows.Columns()
 
+            scanArgs := make([]interface{}, len(columns))
+            values := make([]interface{}, len(columns))
+
+            for i := range values {
+                scanArgs[i] = &values[i]
+            }
+
+            //将数据保存到 record 字典
+            err = rows.Scan(scanArgs...)
+            record := make(map[string]string)
+            for i, col := range values {
+                if col != nil {
+                    record[columns[i]] = string(col.([]byte))
+                }
+            }
+            // fmt.Println(record)
+            //过滤数据
+            if record["customer_id"] == customer_id{
+                fmt.Println(record["customer_id"])  
+                isexist = true 
+            }else{
+                isexist = false
+            }
+        }
+        /**********查询数据***********/
+
+    } else {
+        fmt.Println("open faile:")
+        ctx.JSON(404, gin.H{
+        "error_code": "1",
+        "message": "数据库连接失败,查询异常",
+         })        
+    }
+    
+    return isexist
+}
 //插入数据
 func InsertSearchRecordToDB(ctx *gin.Context) {
     opend, db := OpenDB()
