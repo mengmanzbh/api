@@ -92,7 +92,7 @@ func Submit(ctx *gin.Context) {
         fmt.Println("open success")
 
 	    nowTimeStr := GetTime()
-	    stmt, err := db.Prepare("insert train_tickets_orders set realname=?,nickname=?,cellphone=?,customer_id=?,user_orderid=?,train_date=?,is_accept_standing=?,choose_seats=?,from_station_code=?,to_station_code=?,checi=?,passengers=?,orderid=?,reason=?,error_code=?,update_time=?")
+	    stmt, err := db.Prepare("insert train_tickets_orders set realname=?,nickname=?,cellphone=?,customer_id=?,user_orderid=?,train_date=?,is_accept_standing=?,choose_seats=?,from_station_code=?,to_station_code=?,checi=?,passengers=?,orderid=?,reason=?,error_code=?,create_time=?")
 	    CheckErr(err)
 	    res, err := stmt.Exec(realname, nickname, cellphone, customer_id, user_orderid,train_date,is_accept_standing,choose_seats,from_station_code,to_station_code,checi,passengers,juheorderid,reason,error_code,nowTimeStr)
 	    CheckErr(err)
