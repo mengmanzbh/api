@@ -20,13 +20,7 @@ func Submit(ctx *gin.Context) {
 
 	customer_id,realname,nickname,cellphone,istoken := GetUserByAccess(token,ctx)
 
-	if istoken{
-		fmt.Println("token有效")
-		
-		}else{
-        fmt.Println("token无效")
-        return
-		}
+	if !istoken{fmt.Println("token无效")return}
 
 	var customerid string
 	customerid = strconv.FormatFloat(customer_id, 'E', -1, 64)
