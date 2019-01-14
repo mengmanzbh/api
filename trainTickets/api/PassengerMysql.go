@@ -320,7 +320,7 @@ func QueryPassengerFromDB(ctx *gin.Context) {
             }
             // fmt.Println(record)
             //过滤数据
-            fmt.Println("record["customer_id"]:",record["customer_id"])
+            fmt.Println("record_customer_id:",record["customer_id"])
             if record["customer_id"] == customerid{
                 fmt.Println(record["customer_id"])  
                 dataArray = append(dataArray, record)
