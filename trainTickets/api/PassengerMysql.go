@@ -28,6 +28,60 @@ func OpenDB() (success bool, db *sql.DB) {
     CheckErr(err)
     return isOpen, db
 }
+
+//插入数据
+func InsertSearchRecordToDB(ctx *gin.Context) {
+    opend, db := OpenDB()
+    if opend {
+        fmt.Println("open success")
+        
+        /**********插入搜索记录*********/
+        // uid := GetNowtimeMD5()
+        // nowTimeStr := GetTime()
+        // stmt, err := db.Prepare("insert passengers set username=?,departname=?,created=?,password=?,uid=?")
+        // CheckErr(err)
+        // res, err := stmt.Exec("wangbiao", "zhangqi", nowTimeStr, "123456", uid)
+        // CheckErr(err)
+        // id, err := res.LastInsertId()
+        // CheckErr(err)
+        // if err != nil {
+        //     fmt.Println("插入数据失败")
+        // } else {
+        //     fmt.Println("插入数据成功：", id)
+        // }
+        /**********插入搜索记录*********/
+
+
+    } else {
+        fmt.Println("open faile:")
+    }
+
+}
+//查询数据
+func QuerySearchRecordFromDB(ctx *gin.Context) {
+            ctx.JSON(200, gin.H{
+            "error_code": "0",
+            "message": "查询搜索记录成功",
+            })
+}
+//更新数据
+func UpdateSearchRecordToDB(ctx *gin.Context) {
+            ctx.JSON(200, gin.H{
+            "error_code": "0",
+            "message": "更新搜索记录成功",
+            })
+}
+//删除数据
+func DeleteSearchRecordFromDB(ctx *gin.Context) {
+            ctx.JSON(200, gin.H{
+            "error_code": "0",
+            "message": "删除搜索记录成功",
+            })
+
+}
+
+
+
 //插入数据
 func InsertPassengerToDB(ctx *gin.Context) {
         passportse_no := "420205199207231234"
