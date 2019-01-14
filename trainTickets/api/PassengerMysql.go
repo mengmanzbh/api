@@ -36,7 +36,6 @@ func InsertSearchRecordToDB(ctx *gin.Context) {
         fmt.Println("open success")
         
         /**********插入搜索记录*********/
-        uid := GetNowtimeMD5()
         nowTimeStr := GetTime()
         stmt, err := db.Prepare("insert train_ticket_search_record set customer_id=?,search_records=?,update_time=?")
         CheckErr(err)
