@@ -410,10 +410,22 @@ func UpdatePassengerToDB(ctx *gin.Context) {
             CheckErr(err)
             res, err := stmt.Exec(passengerse_name, piao_type, piaotype_name, passporttypese_id, passporttypeseid_name,passportse_no,nowTimeStr,customerid,uid)
             
-            ctx.JSON(200, gin.H{
-               "error_code": "0",
-               "message": "更新乘客信息成功",
-            })
+            CheckErr(err)
+            id, err := res.LastInsertId()
+            CheckErr(err)
+            if err != nil {
+                fmt.Println("更新数据失败")
+                ctx.JSON(200, gin.H{
+                   "error_code": "1",
+                    "message": "更新乘客异常，请稍后重试",
+                })
+            } else {
+                fmt.Println("插入数据成功：", id)
+                ctx.JSON(200, gin.H{
+                   "error_code": "0",
+                   "message": "更新乘客成功",
+                })
+            }
 
         }
 
