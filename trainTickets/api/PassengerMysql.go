@@ -388,12 +388,13 @@ func UpdatePassengerToDB(ctx *gin.Context) {
 
         //先判断数据是否存在
         datain := Dataisexist(ctx,uid)
+        nowTimeStr := GetTime()
         if datain {
             fmt.Println("存在")
 
-            stmt, err := db.Prepare("update passengers set passengerse_name=?, piao_type=?, piaotype_name=?, passporttypese_id=?, passporttypeseid_name=?, passportse_no=? where uid=?")
+            stmt, err := db.Prepare("update passengers set passengerse_name=?, piao_type=?, piaotype_name=?, passporttypese_id=?, passporttypeseid_name=?, passportse_no=?,update_time=? where uid=?")
             CheckErr(err)
-            res, err := stmt.Exec(passengerse_name,piao_type,piaotype_name,passporttypese_id,passporttypeseid_name,passportse_no,uid)
+            res, err := stmt.Exec(passengerse_name,piao_type,piaotype_name,passporttypese_id,passporttypeseid_name,passportse_no,nowTimeStr,uid)
             affect, err := res.RowsAffected()
             fmt.Println("更新数据：", affect)
             CheckErr(err)
@@ -404,7 +405,7 @@ func UpdatePassengerToDB(ctx *gin.Context) {
              })
         }else{
             fmt.Println("不存在,修改的是身份证号码，重新插入记录")
-            
+
             stmt, err := db.Prepare("insert passengers set passengerse_name=?,piao_type=?,piaotype_name=?,passporttypese_id=?,passporttypeseid_name=?,passportse_no=?,create_time=?,customer_id=?,uid=?")
             CheckErr(err)
             res, err := stmt.Exec(passengerse_name, piao_type, piaotype_name, passporttypese_id, passporttypeseid_name,passportse_no,nowTimeStr,customerid,uid)
