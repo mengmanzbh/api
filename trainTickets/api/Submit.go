@@ -22,8 +22,10 @@ func Submit(ctx *gin.Context) {
 	fmt.Println(realname)
 	fmt.Println(nickname)
 	fmt.Println(cellphone)
+     
+    randomstring := utils.GetRandomString(6)
 
-	user_orderid := utils.GetRandomString(6).(string)+customer_id.(string)
+	user_orderid := randomstring+customer_id
 	train_date := ctx.PostForm("train_date")
 	is_accept_standing := ctx.PostForm("is_accept_standing")
 	choose_seats := ctx.PostForm("choose_seats")
