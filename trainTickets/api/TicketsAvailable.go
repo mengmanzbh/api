@@ -15,7 +15,14 @@ func TicketsAvailable(ctx *gin.Context) {
     train_date := ctx.PostForm("train_date")
     from_station := ctx.PostForm("from_station")
     to_station := ctx.PostForm("to_station")
-
+    
+    code := ctx.PostForm("code")
+    token := getAccess(code)//根据前端传来的code获取token
+    _,_,_,_,istoken := utils.GetUserByAccess(token,ctx)
+    if !istoken{
+        fmt.Println("token无效")
+        return
+    }
     	//请求地址
     juheURL :="http://op.juhe.cn/trainTickets/ticketsAvailable"
  

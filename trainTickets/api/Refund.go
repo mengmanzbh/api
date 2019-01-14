@@ -20,7 +20,14 @@ func Refund(ctx *gin.Context) {
 	tickets := ctx.PostForm("tickets")
     totalprice_origin := ctx.PostForm("totalprice")
     code_origin := ctx.PostForm("code")
-	
+    
+    code := ctx.PostForm("code")
+    token := getAccess(code)//根据前端传来的code获取token
+    _,_,_,_,istoken := utils.GetUserByAccess(token,ctx)
+    if !istoken{
+        fmt.Println("token无效")
+        return
+    }
 	//请求地址
 	juheURL :="http://op.juhe.cn/trainTickets/refund"
 	

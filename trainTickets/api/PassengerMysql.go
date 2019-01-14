@@ -31,6 +31,15 @@ func OpenDB() (success bool, db *sql.DB) {
 //先检查数据是否存在，在插入
 func CustomerDataisexist(ctx *gin.Context,uid string) (x bool){
     customer_id := uid
+
+    code := ctx.PostForm("code")
+    token := getAccess(code)//根据前端传来的code获取token
+    _,_,_,_,istoken := utils.GetUserByAccess(token,ctx)
+    if !istoken{
+        fmt.Println("token无效")
+        return
+    }
+
     var isexist bool
     opend, db := OpenDB()
     if opend {
