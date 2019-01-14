@@ -18,7 +18,6 @@ func Submit(ctx *gin.Context) {
 	code := ctx.PostForm("code")
 	token := getAccess(code)//根据前端传来的code获取token
 
-   
 	customer_id,realname,nickname,cellphone := GetUserByAccess(token,ctx)
 	var customerid string
 	customerid = strconv.FormatFloat(customer_id, 'E', -1, 64)
@@ -126,6 +125,7 @@ func GetUserByAccess(access string,ctx *gin.Context)(x float64,y string,z string
 			"error_code": "404",
 			"message": "token失效，请重新登录",
 		})
+		return
     }
     return customer_id,realname,nickname,cellphone
 }
