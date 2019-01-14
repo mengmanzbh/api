@@ -173,9 +173,27 @@ func DeleteSearchRecordFromDB(ctx *gin.Context) {
 
 //插入数据
 func InsertPassengerToDB(ctx *gin.Context) {
-        passportse_no := "420205199207231234"
-        customer_id := "32333"
-        uid := GetMD5Hash(passportse_no+customer_id)
+
+        passengerse_name := ctx.PostForm("passengerse_name")
+        piao_type := ctx.PostForm("piao_type")
+        piaotype_name := ctx.PostForm("piaotype_name")
+        passporttypese_id := ctx.PostForm("passporttypese_id")
+        passporttypeseid_name := ctx.PostForm("passporttypeseid_name")
+        passportse_no := ctx.PostForm("passportse_no")
+
+        code := ctx.PostForm("code")
+        token := getAccess(code)//根据前端传来的code获取token
+        var customerid string
+        customer_id,realname,nickname,cellphone,istoken := utils.GetUserByAccess(token,ctx)
+        //先检查token是否有效
+        if !istoken{
+            fmt.Println("token无效")
+            return
+        }
+        customerid = fmt.Sprintf("%v",customer_id)
+
+
+        uid := GetMD5Hash(passportse_no+customerid)
         nowTimeStr := GetTime()
          //打开数据库
          opend, db := OpenDB()
@@ -194,7 +212,7 @@ func InsertPassengerToDB(ctx *gin.Context) {
 
             stmt, err := db.Prepare("insert passengers set passengerse_name=?,piao_type=?,piaotype_name=?,passporttypese_id=?,passporttypeseid_name=?,passportse_no=?,create_time=?,customer_id=?,uid=?")
             CheckErr(err)
-            res, err := stmt.Exec("张天爱", "1", "成人票", "1", "二代身份证","420205199207231234",nowTimeStr,"334534",uid)
+            res, err := stmt.Exec(passengerse_name, piao_type, piaotype_name, passporttypese_id, passporttypeseid_name,passportse_no,nowTimeStr,customerid,uid)
 
             CheckErr(err)
             id, err := res.LastInsertId()
