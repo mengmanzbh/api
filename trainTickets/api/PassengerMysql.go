@@ -277,7 +277,17 @@ func Dataisexist(ctx *gin.Context,uid string) (x bool){
 //查询数据
 func QueryPassengerFromDB(ctx *gin.Context) {
 
-    customer_id := "334534"
+    code := ctx.PostForm("code")
+    token := getAccess(code)//根据前端传来的code获取token
+    customer_id,realname,nickname,cellphone,istoken := utils.GetUserByAccess(token,ctx)
+    if !istoken{
+        fmt.Println("token无效")
+        return
+    }
+    fmt.Println(customer_id)
+    fmt.Println(realname)
+    fmt.Println(nickname)
+    fmt.Println(cellphone)
 
     opend, db := OpenDB()
     if opend {
