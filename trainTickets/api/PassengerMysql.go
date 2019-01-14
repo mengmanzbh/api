@@ -82,32 +82,42 @@ func CustomerDataisexist(ctx *gin.Context,uid string) (x bool){
 }
 //插入数据
 func InsertSearchRecordToDB(ctx *gin.Context) {
+    customer_id := "323232"
     opend, db := OpenDB()
     if opend {
         fmt.Println("open success")
-        
-        /**********插入搜索记录*********/
-        nowTimeStr := GetTime()
-        stmt, err := db.Prepare("insert train_ticket_search_record set customer_id=?,search_records=?,update_time=?")
-        CheckErr(err)
-        res, err := stmt.Exec("323232", "上海-苏州", nowTimeStr)
-        CheckErr(err)
-        id, err := res.LastInsertId()
-        CheckErr(err)
-        if err != nil {
-            fmt.Println("插入数据失败")
-            ctx.JSON(200, gin.H{
-            "error_code": "1",
-            "message": "插入搜索记录失败",
-            })
-        } else {
-            fmt.Println("插入数据成功：", id)
-            ctx.JSON(200, gin.H{
-            "error_code": "0",
-            "message": "插入搜索记录成功",
-            })
+
+        datain := CustomerDataisexist(ctx,customer_id)
+        if datain {
+             fmt.Println("该用户存在数据库")
+        }else{
+             fmt.Println("该用户不存在数据库")
+
+                /**********插入搜索记录*********/
+                nowTimeStr := GetTime()
+                stmt, err := db.Prepare("insert train_ticket_search_record set customer_id=?,search_records=?,update_time=?")
+                CheckErr(err)
+                res, err := stmt.Exec("323232", "上海-苏州", nowTimeStr)
+                CheckErr(err)
+                id, err := res.LastInsertId()
+                CheckErr(err)
+                if err != nil {
+                    fmt.Println("插入数据失败")
+                    ctx.JSON(200, gin.H{
+                    "error_code": "1",
+                    "message": "插入搜索记录失败",
+                    })
+                } else {
+                    fmt.Println("插入数据成功：", id)
+                    ctx.JSON(200, gin.H{
+                    "error_code": "0",
+                    "message": "插入搜索记录成功",
+                    })
+                }
+                /**********插入搜索记录*********/
         }
-        /**********插入搜索记录*********/
+        
+       
 
 
     } else {
