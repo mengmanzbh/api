@@ -184,7 +184,7 @@ func InsertPassengerToDB(ctx *gin.Context) {
         code := ctx.PostForm("code")
         token := getAccess(code)//根据前端传来的code获取token
         var customerid string
-        customer_id,realname,nickname,cellphone,istoken := utils.GetUserByAccess(token,ctx)
+        customer_id,_,_,_,istoken := utils.GetUserByAccess(token,ctx)
         //先检查token是否有效
         if !istoken{
             fmt.Println("token无效")
