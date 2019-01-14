@@ -25,7 +25,7 @@ func Submit(ctx *gin.Context) {
      }
 
 	var customerid string
-	customerid = strconv.FormatFloat(customer_id, 'f', 5, 64)
+
 	fmt.Println(customerid)
 	fmt.Println(realname)
 	fmt.Println(nickname)
@@ -33,7 +33,7 @@ func Submit(ctx *gin.Context) {
      
     randomstring := utils.GetRandomString(6)
 
-	user_orderid := randomstring+customerid
+	user_orderid := fmt.Sprintf("%s,%s", randomstring, customer_id)
 	train_date := ctx.PostForm("train_date")
 	is_accept_standing := ctx.PostForm("is_accept_standing")
 	choose_seats := ctx.PostForm("choose_seats")
