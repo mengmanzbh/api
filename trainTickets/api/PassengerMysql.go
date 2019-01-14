@@ -279,11 +279,13 @@ func QueryPassengerFromDB(ctx *gin.Context) {
 
     code := ctx.PostForm("code")
     token := getAccess(code)//根据前端传来的code获取token
+    var customerid string
     customer_id,realname,nickname,cellphone,istoken := utils.GetUserByAccess(token,ctx)
     if !istoken{
         fmt.Println("token无效")
         return
     }
+    customerid = fmt.Sprintf("%s",customer_id)
     fmt.Println(customer_id)
     fmt.Println(realname)
     fmt.Println(nickname)
@@ -318,7 +320,7 @@ func QueryPassengerFromDB(ctx *gin.Context) {
             }
             // fmt.Println(record)
             //过滤数据
-            if record["customer_id"] == customer_id{
+            if record["customer_id"] == customerid{
                 fmt.Println(record["customer_id"])  
                 dataArray = append(dataArray, record)
             }
