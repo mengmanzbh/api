@@ -17,7 +17,6 @@ func Submit(ctx *gin.Context) {
 	
 	code := ctx.PostForm("code")
 	token := getAccess(code)//根据前端传来的code获取token
-
 	customer_id,realname,nickname,cellphone,istoken := GetUserByAccess(token,ctx)
 
 	if !istoken{
@@ -27,7 +26,7 @@ func Submit(ctx *gin.Context) {
 
 	var customerid string
 	customerid = strconv.FormatFloat(customer_id, 'E', -1, 64)
-	fmt.Println(customer_id)
+	fmt.Println(customerid)
 	fmt.Println(realname)
 	fmt.Println(nickname)
 	fmt.Println(cellphone)
