@@ -25,7 +25,7 @@ func Submit(ctx *gin.Context) {
      }
 
 	var customerid string
-	customerid = strconv.FormatFloat(customer_id)
+	customerid = strconv.FormatFloat(customer_id, 'f', 5, 64)
 	fmt.Println(customerid)
 	fmt.Println(realname)
 	fmt.Println(nickname)
