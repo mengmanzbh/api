@@ -79,18 +79,30 @@ func Submit(ctx *gin.Context) {
 
     /****************订单入库****************/
      fmt.Println("订单入库")
-    nowTimeStr := GetTime()
-    stmt, err := db.Prepare("insert train_tickets_orders set realname=?,nickname=?,cellphone=?,customer_id=?,user_orderid=?")
-    CheckErr(err)
-    res, err := stmt.Exec(realname, nickname, cellphone, customer_id, user_orderid)
-    CheckErr(err)
-    id, err := res.LastInsertId()
-    CheckErr(err)
-    if err != nil {
-        fmt.Println("插入数据失败")
+
+
+    opend, db := OpenDB()
+    if opend {
+        fmt.Println("open success")
+
+	    nowTimeStr := GetTime()
+	    stmt, err := db.Prepare("insert train_tickets_orders set realname=?,nickname=?,cellphone=?,customer_id=?,user_orderid=?")
+	    CheckErr(err)
+	    res, err := stmt.Exec(realname, nickname, cellphone, customer_id, user_orderid)
+	    CheckErr(err)
+	    id, err := res.LastInsertId()
+	    CheckErr(err)
+	    if err != nil {
+	        fmt.Println("插入数据失败")
+	    } else {
+	        fmt.Println("插入数据成功：", id)
+	    }
+
     } else {
-        fmt.Println("插入数据成功：", id)
+        fmt.Println("open faile:")
     }
+
+
     /****************订单入库****************/
 }
 
