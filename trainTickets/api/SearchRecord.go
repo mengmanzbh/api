@@ -5,13 +5,13 @@ import (
     "fmt"
     // "trainTickets/utils"
     // "net/url"
-    "database/sql"
+    // "database/sql"
     _ "github.com/go-sql-driver/mysql"
     // "encoding/json"
-    "time"
-    "crypto/md5"
-    "encoding/hex"
-    "strconv"
+    // "time"
+    // "crypto/md5"
+    // "encoding/hex"
+    // "strconv"
 )
 
 //插入数据
