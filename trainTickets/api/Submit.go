@@ -99,9 +99,11 @@ func Submit(ctx *gin.Context) {
 	    id, err := res.LastInsertId()
 	    CheckErr(err)
 	    if err != nil {
-	        fmt.Println("插入数据失败")
+	        fmt.Println("订单入库失败")
+	        fmt.Println("订单入库失败：", user_orderid)
 	    } else {
-	        fmt.Println("插入数据成功：", id)
+	        fmt.Println("订单入库成功：", user_orderid)
+	        fmt.Println("订单入库成功：", id)
 	    }
 
     } else {
