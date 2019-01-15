@@ -14,9 +14,9 @@ import (
 //订单提交，占座回调地址，处理完占座后会将订单信息回调到此地址
 func Submit_callback(ctx *gin.Context) {
 	fmt.Println("Submit_callback")
-	data := ctx.PostForm("data")
-    dicdata :=json.loads(data)
-	// fmt.Println(data)
+	// data := ctx.PostForm("data")
+    dicdata := json.loads(ctx.PostForm("data"))
+	fmt.Println(dicdata)
 	// from_station_name := dicdata["from_station_name"].(string)
 	// fmt.Println(from_station_name)
 	// fmt.Println("success")
