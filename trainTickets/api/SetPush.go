@@ -34,9 +34,9 @@ func Submit_callback(ctx *gin.Context) {
     if opend {
         fmt.Println("open success")
 
-		stmt, err := db.Prepare("update train_tickets_orders set from_station_name=? where user_orderid=?")
+		stmt, err := db.Prepare("update train_tickets_orders set orderid=?,msg=?,orderamount=?,status=?,ordernumber=?,submit_time=?,deal_time=?,cancel_time=?,pay_time=?,finished_time=?,refund_time=?,juhe_refund_time=?,train_date=?,from_station_name=?,to_station_name=?,refund_money=? where user_orderid=?")
 	    CheckErr(err)
-	    res, err := stmt.Exec(dicdata["from_station_name"], dicdata["user_orderid"])
+	    res, err := stmt.Exec(dicdata["orderid"],dicdata["msg"],dicdata["orderamount"],dicdata["status"],dicdata["ordernumber"],dicdata["submit_time"],dicdata["deal_time"],dicdata["cancel_time"],dicdata["pay_time"],dicdata["finished_time"],dicdata["refund_time"],dicdata["juhe_refund_time"],dicdata["train_date"],dicdata["from_station_name"],dicdata["to_station_name"],dicdata["refund_money"],dicdata["user_orderid"])
 	    affect, err := res.RowsAffected()
 	    fmt.Println("更新数据：", affect)
 	    CheckErr(err)
