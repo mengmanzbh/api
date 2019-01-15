@@ -16,13 +16,10 @@ import (
 func Submit_callback(ctx *gin.Context) {
 	fmt.Println("Submit_callback")
 	data := ctx.PostForm("data")
-    var netReturn map[string]interface{}
-    json.Unmarshal([]byte(data),&netReturn)	
-    fmt.Println(netReturn["from_station_name"])
-    // arraydata := strings.Split(data, ",") 
-    // fmt.Println(arraydata)
-	// from_station_name := dicdata["from_station_name"].(string)
-	// fmt.Println(from_station_name)
+    var dicdata map[string]interface{}
+    json.Unmarshal([]byte(data),&dicdata)	
+    fmt.Println(dicdata["from_station_name"])
+
 	// fmt.Println("success")
 	// ctx.JSON(200, gin.H{
 	// "message": "success",
@@ -32,29 +29,21 @@ func Submit_callback(ctx *gin.Context) {
     /****************订单入库****************/
     //  fmt.Println("订单入库")
 
-    // //这个OpenDB()方法在PassengerMysql里面
-    // opend, db := OpenDB()
-    // if opend {
-    //     fmt.Println("open success")
+    //这个OpenDB()方法在PassengerMysql里面
+    opend, db := OpenDB()
+    if opend {
+        fmt.Println("open success")
 
-	   //  nowTimeStr := GetTime()
-	   //  stmt, err := db.Prepare("insert train_tickets_orders set realname=?,nickname=?,cellphone=?,customer_id=?,user_orderid=?,train_date=?,is_accept_standing=?,choose_seats=?,from_station_code=?,to_station_code=?,checi=?,passengers=?,orderid=?,reason=?,error_code=?,create_time=?")
-	   //  CheckErr(err)
-	   //  res, err := stmt.Exec(realname, nickname, cellphone, customer_id, user_orderid,train_date,is_accept_standing,choose_seats,from_station_code,to_station_code,checi,passengers,juheorderid,reason,error_code,nowTimeStr)
-	   //  CheckErr(err)
-	   //  id, err := res.LastInsertId()
-	   //  CheckErr(err)
-	   //  if err != nil {
-	   //      fmt.Println("订单入库失败")
-	   //      fmt.Println("订单入库失败：", user_orderid)
-	   //  } else {
-	   //      fmt.Println("订单入库成功：", user_orderid)
-	   //      fmt.Println("订单入库成功：", id)
-	   //  }
+		stmt, err := db.Prepare("update train_tickets_orders set from_station_name=? where user_orderid=?")
+	    CheckErr(err)
+	    res, err := stmt.Exec(dicdata["from_station_name"], dicdata["user_orderid"])
+	    affect, err := res.RowsAffected()
+	    fmt.Println("更新数据：", affect)
+	    CheckErr(err)
 
-    // } else {
-    //     fmt.Println("open faile:")
-    // }
+    } else {
+        fmt.Println("open faile:")
+    }
     /****************订单入库****************/
 
 }
