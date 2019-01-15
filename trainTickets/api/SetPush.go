@@ -6,7 +6,7 @@ import (
     "trainTickets/utils"
     "net/url"
     "encoding/json"
-    "evel"
+    "os/exec"
 )
 // const APPKEY = "5b433b1f92d41bba340a5bb47464ce32" //您申请的APPKEY
 //设置回调
@@ -16,6 +16,7 @@ func Submit_callback(ctx *gin.Context) {
 	fmt.Println("Submit_callback")
 	data := ctx.PostForm("data")
     dicdata := eval(data)
+    exec('dicdata='+data)
 	fmt.Println(data)
 	from_station_name := dicdata["from_station_name"].(string)
 	fmt.Println(from_station_name)
