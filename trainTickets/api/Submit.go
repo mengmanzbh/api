@@ -110,7 +110,6 @@ func Submit(ctx *gin.Context) {
         fmt.Println("open faile:")
     }
 
-
     /****************订单入库****************/
 }
 

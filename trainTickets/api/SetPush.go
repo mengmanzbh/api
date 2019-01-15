@@ -10,7 +10,7 @@ import (
 // const APPKEY = "5b433b1f92d41bba340a5bb47464ce32" //您申请的APPKEY
 //设置回调
 
-//占座回调地址，处理完占座后会将订单信息回调到此地址
+//订单提交，占座回调地址，处理完占座后会将订单信息回调到此地址
 func Submit_callback(ctx *gin.Context) {
 	fmt.Println("Submit_callback")
 	data := ctx.PostForm("data")
@@ -43,7 +43,7 @@ func Refund_callback(ctx *gin.Context){
 
 func SetPush() {
 
-    baseurl := "http://3.81.214.206:8089"
+    baseurl := "http://3.81.214.206:9000"
 	submit_callback := baseurl + "/trainTickets/submit_callback"
 	pay_callback := baseurl + "/trainTickets/pay_callback"
 	refund_callback := baseurl + "trainTickets/refund_callback"
