@@ -15,8 +15,8 @@ func Submit_callback(ctx *gin.Context) {
 	fmt.Println("Submit_callback")
 	data := ctx.PostForm("data")
 	fmt.Println(data)
-	from_station_name := data["from_station_name"].(string)
-	fmt.Println(from_station_name)
+	// from_station_name := data["from_station_name"].(string)
+	fmt.Println(data["from_station_name"])
 	// fmt.Println("success")
 	// ctx.JSON(200, gin.H{
 	// "message": "success",
