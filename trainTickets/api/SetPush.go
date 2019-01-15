@@ -15,10 +15,9 @@ import (
 func Submit_callback(ctx *gin.Context) {
 	fmt.Println("Submit_callback")
 	data := ctx.PostForm("data")
-	fmt.Println(data)
-	fmt.Printf("data type:%T\n", data)
-	json.Unmarshal([]byte(str), &dicdata)
-    fmt.Println(dicdata)
+	var dicdata map[string]int
+	json.Unmarshal(data, &dicdata)
+    fmt.Println(dicdata["from_station_name"])
 	// from_station_name := dicdata["from_station_name"].(string)
 	// fmt.Println(from_station_name)
 	// fmt.Println("success")
