@@ -14,7 +14,7 @@ import (
 func Submit_callback(ctx *gin.Context) {
 	fmt.Println("Submit_callback")
 	data := ctx.PostForm("data")
-    dicdata = eval(data)
+    dicdata := eval(data)
 	fmt.Println(data)
 	from_station_name := dicdata["from_station_name"].(string)
 	fmt.Println(from_station_name)
