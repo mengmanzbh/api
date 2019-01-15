@@ -14,14 +14,7 @@ import (
     "strconv"
     "trainTickets/libs"
 )
-// const (
-//     DB_Driver = fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8",
-//         libs.Conf.Read("mysql", "username"),
-//         libs.Conf.Read("mysql", "password"),
-//         libs.Conf.Read("mysql", "host"),
-//         libs.Conf.Read("mysql", "dataname"))
-//     // DB_Driver = "root:my-secret-pw@tcp(3.81.214.206:3306)/data?charset=utf8"
-// )
+
 func OpenDB() (success bool, db *sql.DB) {
 
     DB_Driver := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8",
