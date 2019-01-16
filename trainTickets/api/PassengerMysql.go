@@ -446,12 +446,46 @@ func UpdatePassengerToDB(ctx *gin.Context) {
 
 
 }
-//删除数据
+//删除数据就是把里面的isdelete字段更新为1
 func DeletePassengerFromDB(ctx *gin.Context) {
-	        ctx.JSON(200, gin.H{
-            "error_code": "0",
-            "message": "删除乘客成功",
-            })
+    passportse_no := ctx.PostForm("passportse_no")
+    code := ctx.PostForm("code")
+
+    token := getAccess(code)//根据前端传来的code获取token
+    var customerid string
+    customer_id,_,_,_,istoken := utils.GetUserByAccess(token,ctx)
+    //先检查token是否有效
+    if !istoken{
+        fmt.Println("token无效")
+        return
+    }
+    customerid = fmt.Sprintf("%v",customer_id)
+
+    uid := GetMD5Hash(passportse_no+customerid)
+    opend, db := OpenDB()
+    if opend {
+        fmt.Println("open success")
+
+            stmt, err := db.Prepare("update passengers set isdelete=? where uid=?")
+            CheckErr(err)
+            res, err := stmt.Exec("1",uid)
+            affect, err := res.RowsAffected()
+            fmt.Println("删除数据：", affect)
+            CheckErr(err)
+
+             ctx.JSON(200, gin.H{
+               "error_code": "0",
+               "message": "乘客信息删除成功",
+             })
+        
+
+    } else {
+        fmt.Println("open faile:")
+        ctx.JSON(200, gin.H{
+        "error_code": "1",
+        "message": "乘客信息删除异常",
+        })
+    }
 
 }
 
