@@ -347,7 +347,12 @@ func QueryPassengerFromDB(ctx *gin.Context) {
             fmt.Println("record_customer_id:",record["customer_id"])
             if record["customer_id"] == customerid{
                 fmt.Println(record["customer_id"])  
-                dataArray = append(dataArray, record)
+
+                //过滤掉用户删除的
+                if record["isdelete"] == "0"{
+                  dataArray = append(dataArray, record)    
+                }
+                
             }
         }
 
