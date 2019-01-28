@@ -11,6 +11,12 @@ import (
 
 func main() {
 	r := gin.New()
+
+    // Logging to a file.
+    // f, _ := os.Create("gin.log")
+    // gin.DefaultWriter = io.MultiWriter(f)
+
+	
     api.SetPush()
 	r.POST("/trainTickets/cityCode", api.CityCode)
 	r.POST("/trainTickets/ticketsAvailable", api.TicketsAvailable)

@@ -1,0 +1,28 @@
+version: "3.2"
+services:
+
+  fluentd:
+    build: ./fluentd
+    image: fluent-es
+    volumes:
+      - type: mount
+        source: ${PWD}/fluentd/conf
+        target: /fluentd/etc
+        read_only: true
+    ports:
+      - "24224:24224"
+      - "24224:24224/udp"
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.2.2
+    environment:
+      - "discovery.type=single-node"    # single node
+    ports:
+      - "9200:9200"
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:6.2.2
+    environment:
+      - "ELASTICSEARCH_URL=http://elasticsearch:9200"   # custom <ip>:<port>
+    ports:
+      - "5601:5601"
